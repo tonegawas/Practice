@@ -1,0 +1,62 @@
+<%= render 'public/nav'%> 
+<div class = "container">
+    <div class = "raw title">
+        <h4>マイページ</h4>
+    </div>
+   
+    <div class="row field title">
+      <div class = "col-2  flex-column justify-content-center" >
+        <p class="font-weight-bold">登録情報</p>
+      </div>
+      <div class = "col-2" >
+       <%= link_to "編集する", end_users_mypage_edit_path ,class: 'btn btn-sm btn-success btn-sm btn-block' %>
+      </div>
+    </div>
+
+    <div>
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <th scope="row" style="width:25%">氏名</th>
+            <td style="width:75%"><%= @user.last_name %>　<%= @user.first_name %> </td>
+          </tr>
+          <tr>
+            <th scope="row">カナ</th>
+             <td><%= @user.last_name_kana %>　<%= @user.first_name_kana %></td>
+          </tr>
+          <tr>
+            <th scope="row">郵便番号</th>
+            <td ><%= @user.postal_code %></td>
+          </tr>
+          <tr>
+            <th scope="row">住所</th>
+            <td ><%= @user.address %></th>
+          </tr>
+          <tr>
+            <th scope="row">電話番号</th>
+            <td ><%= @user.phone_number %></th>
+          </tr>
+          <tr>
+            <th scope="row">メールアドレス</th>
+            <td ><%= @user.email %></th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row field title">
+      <div class = "col-2  flex-column justify-content-center" >
+        <p class="font-weight-bold">配送先</p>
+      </div>
+      <div class = "col-2" >
+       <%= link_to "一覧を見る",end_users_mypage_addresses_path ,class: 'btn btn-sm btn-primary btn-sm btn-block' %>
+      </div>
+    </div>
+     <div class="row field title">
+      <div class = "col-2  flex-column justify-content-center" >
+        <p class="font-weight-bold">注文履歴</p>
+      </div>
+      <div class = "col-2" >
+       <%= link_to "一覧を見る",end_users_mypage_orders_path ,class: 'btn btn-sm btn-primary btn-sm btn-block' %>
+      </div>
+    </div>
+</div>

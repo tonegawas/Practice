@@ -1,0 +1,39 @@
+<%= render 'public/nav'%> 
+
+<div class = "container">
+    <div class="row title">
+        <div class = "col-md-2 offset-1">
+            <h4>注文情報入力</h4>
+        </div>
+    </div>
+    <%= form_with model: @order, url: orders_confirm_path,  local: true do |f| %>
+        <div class = "row title">
+            <h5 class = "col-12">支払い方法</h5></br>
+            <p class = "col-11 offset-1"><%= f.radio_button :payment_method,"credit", checked: true%> クレジットカード</p>
+            <p class = "col-11 offset-1"><%= f.radio_button :payment_method, "bank" %> 銀行振り込み</p>
+        </div>
+        <div class = "row title">
+            <h5 class = "col-12">お届け先</h5>
+            <p class = "col-11 offset-1"><%= f.radio_button :address_option, 0, checked: true%> ご自身の住所</p>
+            <p class = "col-11 offset-1">　〒<%= @user.postal_code %>　<%= @user.address %> <%= @user.last_name %><%= @user.first_name %></p>
+            
+            <p class = "col-11 offset-1"><%= f.radio_button :address_option, 1%> 登録済住所から選択</p>
+            <p class = "col-11 offset-1"><%= f.collection_select :selected_address, Address.where(end_user_id: current_end_user.id), :id, :display_address, include_blank: "--選択して下さい--" %></p>
+            
+            <p class = "col-11 offset-1"><%= f.radio_button :address_option ,2%> 新しいお届け先</p>
+            <div class = "col-3 offset-1"><%= f.label "郵便番号（ハイフンなし）" %></div>
+            <div class = "col-7 "><%= f.text_field :new_postal_code , :placeholder => "0000000" %></div>
+            
+            <div class = "col-3 offset-1 space"><%= f.label "住所" %></div>
+            <div class = "col-7 space"><%= f.text_field :new_address , :size=>"60" , :placeholder => "東京都渋谷区代々木神園町0-0" %></div>
+            
+            <div class = "col-3 offset-1 space"><%= f.label "名前" %></div>
+            <div class = "col-7 space"><%= f.text_field :new_name, :placeholder => "令和道子" %></div>
+        </div>
+        <div class = "row title">
+            <div class ="col-3  mx-auto">
+                <%= f.submit "確認登録画面へ進む", class:"btn btn-primary" %>
+            </div>
+        </div>
+    <% end %>
+</div>

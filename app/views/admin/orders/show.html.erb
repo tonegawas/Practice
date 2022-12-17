@@ -1,0 +1,99 @@
+<%= render 'admin/nav'%> 
+<div class = "container">
+    <div class="row title">
+        <div class = "col-md-2 offset-1">
+            <h4>注文履歴詳細</h4>
+        </div>
+    </div>
+    <div class = "row title">
+        <div class = "col-12">
+            <table class = "table table-borderless">
+                <tbody>
+                    <%= form_with model: @order, url: admin_order_path(@order.id),  local: true do |f| %>
+                        <tr>
+                            <th scope = "row" style = "width:20%">購入者</th>
+                            <td style = "width:80%"><%= @order.end_user.last_name %><%= @order.end_user.first_name %></td>
+                        </tr>
+                        <tr>
+                            <th scope = "row" style = "width:20%">注文日</th>
+                            <td style = "width:80%"><%= @order.created_at.strftime('%Y/%m/%d') %></td>
+                        </tr>
+                        <tr>
+                            <th scope = "row" style = "width:20%">配送先</th>
+                            <td style = "width:80%">〒<%= @order.postal_code %> <%= @order.address %></td>
+                        </tr>
+                        <tr>
+                            <th scope = "row" style = "width:20%"></th>
+                            <td style = "width:80%"><%= @order.name %></td>
+                        </tr>
+                        <tr>
+                            <th scope = "row" style = "width:20%">支払い方法</th>
+                            <td style = "width:80%"><%= @order.payment_method_i18n %></td>
+                        </tr>
+                        <tr>
+                            <th>注文ステータス</th>
+                            <td style = "width:20%"><%= f.select :status, [["入金待ち", "p_wait"], ["入金確認", "p_done"], ["制作中", "making"], ["発送準備", "s_wait"], ["発送済み", "s_done"]],　selected: @order.status %></td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <td ><%= f.submit "更新",class: 'btn btn-sm btn-success btn-sm ' %></td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class = "row title">
+        <div class = "col-12">
+            <table class = "table ">
+                <thead>
+                    <th scope = "col">商品名</th>
+                    <th scope = "col">単価(税込)</th>
+                    <th scope = "col">数量</th>
+                    <th scope = "col">小計</th>
+                    <th scope = "col" style = "width:13%">制作ステータス</th>
+                    <th scope = "col" style = "width:5%">
+                    </th>
+                </thead>
+                <tbody>
+                    <% total = 0 %>
+                    <% @order.order_details.each do |order_detail|%>
+                        <tr>
+                            <td><%= order_detail.item.name%></td>
+                            <td><%= (order_detail.price * 1.1).to_i %></td>
+                            <td><%= order_detail.amount%></td>
+                            <td>
+                                <%= (order_detail.price * 1.1 * order_detail.amount).to_i  %>
+                                <% total +=  (order_detail.price * 1.1 * order_detail.amount).to_i %>
+                            </td>
+                            <%= form_with model: order_detail, url: admin_order_detail_path(order_detail.id),  local: true do |f| %>
+                                <td><%= f.select :making_status, [["制作不可", "m_no"], ["制作待ち", "m_wait"], ["制作中", "m_ing"], ["制作完了", "m_done"]],　selected: order_detail.making_status %></td>
+                                <td ><%= f.submit "更新",class: 'btn btn-sm btn-success btn-sm btn-block' %></td>
+                            <%end%>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class = "row">
+        <div class = "col-3 offset-9">
+            <table class = "table table-borderless">
+                <tbody>
+                    <tr>
+                        <th cope = "row" style = "width:50%">商品合計</th>
+                        <td style = "width:80%"><%= total %></td>
+                    </tr>
+                    <tr>
+                        <th cope = "row" style = "width:50%">送料</th>
+                        <td style = "width:80%"><%= @order.shipping_cost %></td>
+                    </tr>
+                    <tr>
+                        <th cope = "row" style = "width:50%">請求金額合計</th>
+                        <td style = "width:80%"><%= @order.shipping_cost + total %></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

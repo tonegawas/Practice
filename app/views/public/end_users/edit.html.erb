@@ -1,0 +1,79 @@
+<%= render 'public/nav'%> 
+
+<div class = "container">
+  <div class="row title">
+    <h4>会員情報編集</h4>
+  </div>
+
+  <%= form_with model: @user,url: end_users_mypage_path,  local: true do |f| %>
+    
+    <div class = "row field">
+      <div class = "col-3">
+          <%= f.label "名前　　　　　　　　　(姓)" %>
+      </div>
+      <div class = "col-8">
+          <%= f.text_field :last_name, autofocus: true %>
+          <%= f.label "　　(名)　" %>
+          <%= f.text_field :first_name, autofocus: true %>
+      </div>
+    </div>
+    
+    <div class = "row field">
+      <div class = "col-3">
+        <%= f.label "フリガナ　　　　　　(セイ)" %>
+      </div>
+      <div class = "col-8">
+        <%= f.text_field :last_name_kana, autofocus: true %>
+        <%= f.label "　　(メイ)" %>
+        <%= f.text_field :first_name_kana, autofocus: true %>
+      </div>
+    </div>
+    
+    <div class = "row field">
+      <div class = "col-3">
+        <%= f.label "メールアドレス　　　　　　　　　　" %>
+      </div>
+      <div class = "col-8">
+        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+      </div>
+    </div>
+    
+    <div class = "row field">
+      <div class = "col-3">
+        <%= f.label "郵便番号(ハイフンなし)" %>
+      </div>
+      <div class = "col-8">
+        <%= f.text_field :postal_code, autofocus: true%>
+      </div>
+    </div>
+    
+    <div class = "row field">
+      <div class = "col-3">
+        <%= f.label "住所" %>
+      </div>
+      <div class = "col-8">
+        <%= f.text_field :address, autofocus: true %>
+      </div>
+    </div>
+    
+    <div class = "row field">
+      <div class = "col-3">
+        <%= f.label "電話番号(ハイフンなし)" %>
+      </div>
+      <div class = "col-8">
+        <%= f.text_field :phone_number, autofocus: true %>
+      </div>
+    </div>
+  
+  <div class="btn-wrapper">
+    <div class="row field field", style="border:1px solid gray; text-align:right; width:200px;">
+      <div class = "col-4 offset-3 col-md-3">
+        <%= f.submit "編集内容を保存",class: 'btn btn-sm btn-success btn-sm btn-block w-100px ' %>
+      </div>
+      <div class = "col-3 col-md-2">
+        <%= link_to "退会する",end_users_mypage_confirm_path, class: 'btn btn-sm btn-danger btn-sm btn-block' %>
+      </div>
+    </div>
+  </div>
+    
+  <% end %>

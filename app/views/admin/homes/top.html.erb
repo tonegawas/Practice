@@ -1,0 +1,44 @@
+<%= render 'admin/nav'%> 
+<div class = "container">
+    <% if admin_signed_in? %>
+        <div class="row title">
+            <div class = "col-md-2 offset-1">
+                <h4>注文履歴一覧</h4>
+            </div>
+        </div>
+        <div class = "row title">
+            <table class ="table col-10">
+                <thead class = "thead-light">
+                    <tr>
+                        <th scope = "col">購入日時</th>
+                        <th scope = "col">購入者</th>
+                        <th scope = "col">注文個数</th>
+                        <th scope = "col">注文ステータス</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @orders.each do |order|%>
+                    <% amount = OrderDetail.where(order_id: order.id).sum(:amount) %>
+                        <tr>
+                            <td><%= link_to  order.created_at.to_s(:datetime_jp), admin_order_path(order.id) %> </td>
+                            <td><%= order.name %></td>
+                            <td><%= amount %></td>
+                            <td><%= order.status_i18n %></td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    <% else %>
+    <div class = "row title">
+        <div class = "col-3 mx-auto title">
+            <h4>管理者ログインページ</h4>
+        </div>
+    </div>
+    <div class = "row title">
+        <div class = "col-3 mx-auto title">
+            <%= link_to "ログイン", new_admin_session_path, class: 'btn btn-sm btn-success btn-sm btn-block'%>
+        </div>
+    </div>
+    <% end %>
+</div>
