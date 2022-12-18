@@ -18,14 +18,13 @@
 import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import "channels"
-import jQuery from "jquery"
-import "popper.js"
-import "bootstrap"
 
 import '@fortawesome/fontawesome-free/js/all';
-import "../stylesheets/application" 
 
 import "jquery";
 import "popper.js";
 import "bootstrap";
-import "../stylesheets/application" 
+import "../stylesheets/application.scss"
+
+Rails.start();
+Turbolinks.start()

@@ -10,7 +10,6 @@ environment.plugins.prepend(
     Popper: 'popper.js'
   })
 )
-
 //ここまで
 
 module.exports = environment
